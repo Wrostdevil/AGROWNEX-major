@@ -1,0 +1,1 @@
+SYNTHETIC FIXTURE — this artifact was trained on the generated software-test fixture, not on curated field data. Its numbers describe the fixture distribution and must not be presented as field-validated performance.

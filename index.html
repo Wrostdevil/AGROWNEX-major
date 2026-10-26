@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agrownex — Understand Your Crops. Grow With Confidence.</title>
+    <meta name="description"
+      content="AgrowNex is an explainable agricultural intelligence platform connecting crop health assessment, evidence-informed treatment planning, and community-level early warning. Built to show its reasoning — every result travels with its explanation."
+    />
+    <meta name="theme-color" content="#102A24" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Apply saved theme before first paint to avoid a flash of the wrong theme.
+      try {
+        var raw = localStorage.getItem('agrownex.prefs.v1')
+        if (raw) {
+          var prefs = JSON.parse(raw)
+          if (prefs && prefs.theme === 'dark') {
+            document.documentElement.classList.add('dark')
+          }
+        }
+      } catch (e) {
+        /* ignore */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

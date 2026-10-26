@@ -1,0 +1,270 @@
+@import "tailwindcss";
+
+/* Class-based dark mode (`.dark` on <html>) */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Semantic design tokens. Presentational code should almost always use these
+   so light/dark switching stays intrinsic.
+--------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+  --s-canvas: #f8f7f2; /* Warm ivory page background */
+  --s-surface: #ffffff;
+  --s-surface-2: #eef2ea;
+  --s-surface-3: #e4ebe0;
+  --s-ink: #202923;
+  --s-muted: #69736c;
+  --s-faint: #8b958e;
+  --s-line: rgba(32, 41, 35, 0.12);
+  --s-line-strong: rgba(32, 41, 35, 0.22);
+  --s-brand: #267a56;
+  --s-brand-strong: #1e6445;
+  --s-brand-soft: #e9f1e8;
+  --s-on-brand: #ffffff;
+  --s-caution: #a86f22;
+  --s-caution-soft: #f6eedb;
+  --s-danger: #b84a43;
+  --s-danger-soft: #f8e9e7;
+}
+
+.dark {
+  color-scheme: dark;
+  --s-canvas: #0b1d18;
+  --s-surface: #132b23;
+  --s-surface-2: #0f231d;
+  --s-surface-3: #1b3a2d;
+  --s-ink: #edf3ec;
+  --s-muted: #9fb2a6;
+  --s-faint: #7e9187;
+  --s-line: rgba(235, 243, 235, 0.1);
+  --s-line-strong: rgba(235, 243, 235, 0.2);
+  --s-brand: #46b083;
+  --s-brand-strong: #5fc797;
+  --s-brand-soft: rgba(70, 176, 131, 0.14);
+  --s-on-brand: #0b1d18;
+  --s-caution: #d9a254;
+  --s-caution-soft: rgba(217, 162, 84, 0.14);
+  --s-danger: #de867c;
+  --s-danger-soft: rgba(222, 134, 124, 0.14);
+}
+
+@theme inline {
+  --color-canvas: var(--s-canvas);
+  --color-surface: var(--s-surface);
+  --color-surface-2: var(--s-surface-2);
+  --color-surface-3: var(--s-surface-3);
+  --color-ink: var(--s-ink);
+  --color-muted: var(--s-muted);
+  --color-faint: var(--s-faint);
+  --color-line: var(--s-line);
+  --color-line-strong: var(--s-line-strong);
+  --color-brand: var(--s-brand);
+  --color-brand-strong: var(--s-brand-strong);
+  --color-brand-soft: var(--s-brand-soft);
+  --color-on-brand: var(--s-on-brand);
+  --color-caution: var(--s-caution);
+  --color-caution-soft: var(--s-caution-soft);
+  --color-danger: var(--s-danger);
+  --color-danger-soft: var(--s-danger-soft);
+}
+
+/* Fixed palette (does not change between themes) */
+@theme {
+  --color-forest-950: #081d17;
+  --color-forest-900: #102a24;
+  --color-forest-800: #173d32;
+  --color-forest-700: #1f4b3d;
+  --color-forest-600: #267a56;
+  --color-forest-500: #2f8c64;
+  --color-sage-500: #a9c8a8;
+  --color-sage-400: #c4dcbf;
+  --color-sage-300: #dbe8d6;
+  --color-sage-200: #eaf1e6;
+  --color-ivory: #f8f7f2;
+  --color-dawn: #f7ead6;
+  --color-dawn-deep: #eccf9f;
+
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(16 42 36 / 0.05), 0 10px 30px -12px rgb(16 42 36 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(16 42 36 / 0.06), 0 22px 48px -18px rgb(16 42 36 / 0.28);
+  --shadow-inset-line: inset 0 0 0 1px rgb(16 42 36 / 0.05);
+  --shadow-glow-brand: 0 0 0 1px rgb(38 122 86 / 0.25), 0 10px 40px -8px rgb(38 122 86 / 0.35);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 10s ease-in-out infinite;
+  --animate-polly: polly 14s linear infinite;
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  --radius-4xl: 1.75rem;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes polly {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate3d(-24px, -46px, 0);
+    opacity: 0;
+  }
+}
+
+@keyframes shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--s-canvas);
+    color: var(--s-ink);
+    font-family: var(--font-sans);
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--s-brand) 24%, transparent);
+  }
+
+  :focus-visible {
+    outline: 2px solid color-mix(in oklab, var(--s-brand) 70%, transparent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Restrained scrollbars */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--s-ink) 20%, transparent) transparent;
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  /* Range input base styling used by the Slider component */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--s-ink) 10%, transparent);
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -6px;
+    height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    background: var(--s-brand);
+    border: 3px solid var(--s-surface);
+    box-shadow: 0 2px 8px rgb(16 42 36 / 0.25);
+  }
+  input[type="range"]::-moz-range-track {
+    height: 6px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--s-ink) 10%, transparent);
+  }
+  input[type="range"]::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 999px;
+    background: var(--s-brand);
+    border: 3px solid var(--s-surface);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Editorial kicker label */
+  .kicker {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Subtle film grain for hero / dark sections */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.07;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Recharts theming hooks */
+.recharts-surface:focus {
+  outline: none;
+}
