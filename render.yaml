@@ -1,0 +1,49 @@
+# Render Blueprint for the two long-running AgrowNex services.
+#
+# The React/Vite frontend is deployed separately on Vercel (see DEPLOYMENT.md).
+# Why not Vercel for these two?
+#   - backend: persistent MongoDB connection + in-process rate limiting.
+#   - ml-service: ~490 MB of Python dependencies (numpy/scipy/scikit-learn/
+#     pandas/SHAP/numba/llvmlite), above Vercel's serverless size limit.
+#
+# Usage: Render Dashboard -> New + -> Blueprint -> connect this repository.
+# Render prompts for MONGODB_URI, ML_SERVICE_URL and CORS_ORIGINS.
+
+services:
+  - type: web
+    name: agrownex-ml
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: ml-service
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      # Pinned because numpy 1.26.4 / scikit-learn 1.5.2 have no Python 3.14
+      # wheels (Render's default runtime is newer).
+      - key: PYTHON_VERSION
+        value: 3.12.6
+
+  - type: web
+    name: agrownex-api
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: node dist/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MONGODB_URI
+        sync: false
+      - key: ML_SERVICE_URL
+        value: https://agrownex-ml.onrender.com
+      - key: ML_TIMEOUT_MS
+        value: "60000"
+      - key: CORS_ORIGINS
+        sync: false

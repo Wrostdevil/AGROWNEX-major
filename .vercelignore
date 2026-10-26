@@ -1,0 +1,7 @@
+# Ignore non-frontend code when uploading to Vercel.
+# The frontend only imports from src/.
+backend
+ml-service
+data
+scripts
+render.yaml
