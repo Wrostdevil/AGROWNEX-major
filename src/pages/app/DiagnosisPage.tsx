@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Info, Stethoscope } from 'lucide-react'
 import { usePageTitle } from '../../hooks'
-import { NoteBlock, PageHeader } from '../../components/ui/shared'
+import { PageHeader } from '../../components/ui/shared'
 import { Stepper, Skeleton } from '../../components/ui/extra'
 import { Field, Input, Select, Textarea } from '../../components/ui/inputs'
 import { Button, LinkButton } from '../../components/ui/Button'
@@ -323,14 +323,6 @@ export function DiagnosisPage() {
       )}
 
       {stage === 2 && result && <ResultPanel result={result} onReset={() => resetAll('Form cleared — ready for another assessment.')} />}
-
-      {stage === 0 && (
-        <NoteBlock className="mt-6" tone="info" title="What this analysis does not do">
-          Assessments are decision support, not a diagnosis. Image recognition isn't part of the
-          pipeline, and nothing is collected beyond this device. Every result carries an uncertainty
-          note, so weigh it against what you actually see in the field.
-        </NoteBlock>
-      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
+  Activity,
   ArrowRight,
   Bell,
   Bot,
@@ -100,6 +101,7 @@ export function DashboardPage() {
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard
           loading={loading}
+          index={0}
           icon={<ScanLine size={17} />}
           label="Recent crop assessments"
           value={String(history.length)}
@@ -108,6 +110,7 @@ export function DashboardPage() {
         />
         <StatCard
           loading={loading}
+          index={1}
           icon={<Radar size={17} />}
           label="Watch alerts"
           value={String(sampleAlerts.length)}
@@ -116,6 +119,7 @@ export function DashboardPage() {
         />
         <StatCard
           loading={loading}
+          index={2}
           icon={<Wallet size={17} />}
           label="Saved treatment comparisons"
           value={String(saved.length)}
@@ -124,10 +128,11 @@ export function DashboardPage() {
         />
         <StatCard
           loading={loading}
-          icon={<Radar size={17} />}
+          index={3}
+          icon={<Activity size={17} />}
           label="Community trend status"
           value={trendStatus === 'attention' ? 'Attention' : trendStatus === 'watch' ? 'Watch' : 'Steady'}
-          sub="North District · tomato"
+          sub={`${REGIONS.find((r) => r.id === regionId)?.name} · tomato`}
           to="/app/community"
           tone={trendStatus === 'attention' ? 'danger' : trendStatus === 'watch' ? 'caution' : 'brand'}
         />
@@ -139,7 +144,12 @@ export function DashboardPage() {
           <Card>
             <div className="flex flex-wrap items-center justify-between gap-3 px-5 pt-5 pb-2">
               <div>
-                <h3 className="text-[15px] font-bold text-ink">Community report trend</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-[15px] font-bold text-ink">Community report trend</h3>
+                  <Badge tone={trendStatus === 'attention' ? 'danger' : trendStatus === 'watch' ? 'caution' : 'brand'} dot>
+                    {trendStatus === 'attention' ? 'Attention' : trendStatus === 'watch' ? 'Watch' : 'Steady'}
+                  </Badge>
+                </div>
                 <p className="mt-0.5 text-[12.5px] text-muted">Dark-spot reports on tomato · 12-week window</p>
               </div>
               <select
@@ -216,18 +226,26 @@ export function DashboardPage() {
               <h3 className="text-[15px] font-bold text-ink">Activity timeline</h3>
             </div>
             <div className="px-5 pb-5">
-              <ol className="relative space-y-3.5 border-l border-line pl-4">
-                {activity.map((a, i) => (
-                  <li key={`${a.label}-${i}`} className="relative">
-                    <span aria-hidden className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full bg-brand/70 ring-4 ring-surface" />
-                    <Link to={a.to} className="block text-[13px] font-semibold text-ink hover:text-brand">
-                      {a.label}
-                    </Link>
-                    <p className="truncate text-[12px] text-muted">{a.meta}</p>
-                    <p className="text-[11px] text-faint">{relativeTime(a.ts)}</p>
-                  </li>
-                ))}
-              </ol>
+              {activity.length === 0 ? (
+                <EmptyState
+                  icon={<Clock size={18} />}
+                  title="Nothing recorded yet"
+                  description="Assessments, notifications and field observations will appear here as you use the workspace."
+                />
+              ) : (
+                <ol className="relative space-y-3.5 border-l border-line pl-4">
+                  {activity.map((a, i) => (
+                    <li key={`${a.label}-${i}`} className="relative">
+                      <span aria-hidden className="absolute -left-[21px] top-1.5 h-2.5 w-2.5 rounded-full bg-brand/70 ring-4 ring-surface" />
+                      <Link to={a.to} className="block text-[13px] font-semibold text-ink hover:text-brand">
+                        {a.label}
+                      </Link>
+                      <p className="truncate text-[12px] text-muted">{a.meta}</p>
+                      <p className="text-[11px] text-faint">{relativeTime(a.ts)}</p>
+                    </li>
+                  ))}
+                </ol>
+              )}
             </div>
           </Card>
         </div>
@@ -309,6 +327,7 @@ function StatCard({
   sub,
   to,
   loading,
+  index = 0,
   tone = 'plain',
 }: {
   icon: React.ReactNode
@@ -317,6 +336,7 @@ function StatCard({
   sub: string
   to: string
   loading?: boolean
+  index?: number
   tone?: 'plain' | 'brand' | 'caution' | 'danger'
 }) {
   const toneRing = {
@@ -326,7 +346,11 @@ function StatCard({
     danger: 'bg-danger-soft text-danger',
   }[tone]
   return (
-    <motion.div initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, ease }}>
+    <motion.div
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, ease, delay: index * 0.06 }}
+    >
       <Link to={to} className="block rounded-2xl bg-surface p-4.5 shadow-card ring-1 ring-inset ring-line transition hover:-translate-y-0.5 hover:shadow-lift">
         <div className="flex items-center gap-2.5">
           <span className={cn('grid h-8 w-8 place-items-center rounded-lg ring-1 ring-inset ring-line', toneRing)} aria-hidden>{icon}</span>

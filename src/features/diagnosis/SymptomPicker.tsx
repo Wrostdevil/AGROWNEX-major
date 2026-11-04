@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Check, ChevronDown, ImagePlus } from 'lucide-react'
+import { Camera, Check, ChevronDown, ImagePlus } from 'lucide-react'
 import { SYMPTOM_GROUPS } from '../../data/catalog'
+import { CameraCapture } from '../../components/ui/CameraCapture'
 import { cn } from '../../utils'
 
 /**
@@ -71,6 +73,7 @@ export interface DropzoneImageProps {
 }
 
 export function DropzoneImage({ preview, fileName, busy, error, onSelectFile, onRemove }: DropzoneImageProps) {
+  const [camOpen, setCamOpen] = useState(false)
   return (
     <div>
       <div
@@ -87,12 +90,12 @@ export function DropzoneImage({ preview, fileName, busy, error, onSelectFile, on
       >
         {preview ? (
           <AnimatePresence>
-            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="flex items-center gap-4">
+            <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="flex flex-col items-center gap-4 sm:flex-row">
               <img src={preview} alt="Selected crop area preview" className="h-24 w-24 rounded-xl object-cover ring-1 ring-line" />
               <div className="min-w-0 flex-1 text-left">
                 <p className="truncate text-[13px] font-bold text-ink">{fileName}</p>
                 <p className="mt-0.5 text-[11.5px] text-muted">Stored downscaled on this device · used for context only</p>
-                <div className="mt-2 flex gap-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
                   <button type="button" className="text-[12px] font-bold text-brand hover:underline" onClick={onRemove}>
                     Remove image
                   </button>
@@ -100,6 +103,9 @@ export function DropzoneImage({ preview, fileName, busy, error, onSelectFile, on
                     Replace
                     <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) onSelectFile(f) }} />
                   </label>
+                  <button type="button" className="flex items-center gap-1 text-[12px] font-bold text-muted hover:text-ink" onClick={() => setCamOpen(true)}>
+                    <Camera size={12} aria-hidden /> Take new photo
+                  </button>
                 </div>
               </div>
             </motion.div>
@@ -109,12 +115,21 @@ export function DropzoneImage({ preview, fileName, busy, error, onSelectFile, on
             <span className="grid h-11 w-11 place-items-center rounded-xl bg-surface text-brand ring-1 ring-inset ring-line">
               <ImagePlus size={19} aria-hidden />
             </span>
-            <p className="mt-1 text-[13px] font-bold text-ink">Drag & drop an image, or browse</p>
+            <p className="mt-1 text-[13px] font-bold text-ink">Drag & drop an image, or hit the camera</p>
             <p className="text-[11.5px] text-muted">Optional · JPG / PNG / WebP · up to 5 MB · a leaf close-up works best</p>
-            <label className="mt-1.5 cursor-pointer rounded-xl bg-surface px-4 py-2 text-[12.5px] font-bold text-brand ring-1 ring-inset ring-brand/25 transition hover:bg-brand hover:text-on-brand">
-              Choose image
-              <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) onSelectFile(f) }} />
-            </label>
+            <div className="mt-1.5 flex flex-wrap items-center justify-center gap-2">
+              <label className="cursor-pointer rounded-xl bg-surface px-4 py-2 text-[12.5px] font-bold text-brand ring-1 ring-inset ring-brand/25 transition hover:bg-brand hover:text-on-brand">
+                Choose from device
+                <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={(e) => { const f = e.target.files?.[0]; if (f) onSelectFile(f) }} />
+              </label>
+              <button
+                type="button"
+                onClick={() => setCamOpen(true)}
+                className="flex items-center gap-1.5 rounded-xl bg-brand px-4 py-2 text-[12.5px] font-bold text-on-brand ring-1 ring-inset ring-brand-strong/40 transition hover:bg-brand-strong"
+              >
+                <Camera size={14} aria-hidden /> Take photo
+              </button>
+            </div>
           </div>
         )}
         {busy && (
@@ -126,6 +141,7 @@ export function DropzoneImage({ preview, fileName, busy, error, onSelectFile, on
       {error && (
         <p className="mt-2 text-[12.5px] font-medium text-danger" role="alert">{error}</p>
       )}
+      <CameraCapture open={camOpen} onClose={() => setCamOpen(false)} onCapture={onSelectFile} />
     </div>
   )
 }

@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Award, BookOpen, CheckCircle2, CircleAlert, Minus, Plus, ShieldCheck, SlidersHorizontal, TriangleAlert, Wallet } from 'lucide-react'
 import { usePageTitle } from '../../hooks'
-import { PageHeader, NoteBlock } from '../../components/ui/shared'
+import { PageHeader } from '../../components/ui/shared'
 import { Segmented } from '../../components/ui/extra'
 import { Card } from '../../components/ui/Card'
 import { Badge } from '../../components/ui/Badge'
@@ -228,12 +228,6 @@ export function TreatmentsPage() {
           Check community trends before spending
         </LinkButton>
       </div>
-
-      <NoteBlock className="mt-6" tone="info" title="What this planner never does">
-        It does not list a chemical compound tied to real efficacy rates, does not give dosage or
-        spray schedules, and does not claim any option's price or performance — the bands represent
-        structure only, and printed labels are the source of truth.
-      </NoteBlock>
 
       {/* Compare dialog */}
       <Dialog open={compareOpen} onClose={() => setCompareOpen(false)} title="Option side-by-side" description={`Snapshot — ${pickedRanked.length} options compared on the same axes.`} size="lg" footer={<Button onClick={() => setCompareOpen(false)} variant="outline">Close</Button>}>

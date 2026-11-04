@@ -1,12 +1,9 @@
 import { useMemo, useState } from 'react'
-import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import {
   Bell,
-  Bot,
   ChevronRight,
-  Download,
-  FlaskConical,
   History,
   Info,
   LayoutDashboard,
@@ -20,7 +17,6 @@ import {
   Sprout,
   Stethoscope,
   Sun,
-  Trash2,
   Wallet,
   X,
   type LucideIcon,
@@ -32,8 +28,7 @@ import { OnboardingModal } from './OnboardingModal'
 import { AssistantDock } from './AssistantDock'
 import { ConnectionBadge } from './ConnectionBadge'
 import { useUnreadCount } from '../../services/notificationService'
-import { displayName, initialsFor, updatePreferences, usePreferences } from '../../services/preferences'
-import { exportWorkspaceData, resetWorkspaceData } from '../../services/dataManagement'
+import { updatePreferences, usePreferences } from '../../services/preferences'
 import { useCommandPaletteKey } from '../../hooks'
 
 // ---------------------------------------------------------------------------
@@ -60,13 +55,6 @@ const NAV_SECTIONS: { title: string; items: NavItem[] }[] = [
     ],
   },
   {
-    title: 'Intelligence',
-    items: [
-      { to: '/app/assistant', label: 'AI Assistant', icon: Bot },
-      { to: '/app/evaluation', label: 'Model Evaluation', icon: FlaskConical, badge: 'Lab' },
-    ],
-  },
-  {
     title: 'Organise',
     items: [
       { to: '/app/fields', label: 'Fields & Crops', icon: Map },
@@ -88,6 +76,7 @@ function navTitleForPath(pathname: string): string {
   if (pathname.startsWith('/app/treatments')) return 'Treatment Planner'
   if (pathname.startsWith('/app/community')) return 'Community Alerts'
   if (pathname.startsWith('/app/assistant')) return 'AI Assistant'
+  if (pathname.startsWith('/app/evaluation')) return 'Model Evaluation'
   if (pathname.startsWith('/app/fields')) return 'Fields & Crops'
   if (pathname.startsWith('/app/history')) return 'Analysis History'
   if (pathname.startsWith('/app/notifications')) return 'Notifications'
@@ -106,13 +95,10 @@ function isActivePath(pathname: string, to: string) {
 
 export function AppLayout() {
   const location = useLocation()
-  const navigate = useNavigate()
   const prefs = usePreferences()
   const unread = useUnreadCount()
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [paletteOpen, setPaletteOpen] = useState(false)
-  const [profileOpen, setProfileOpen] = useState(false)
-  const [resetConfirm, setResetConfirm] = useState(false)
 
   useCommandPaletteKey(() => setPaletteOpen(true))
 
@@ -309,58 +295,6 @@ export function AppLayout() {
                   </span>
                 )}
               </Link>
-
-              {/* Profile */}
-              <div className="relative">
-                <button
-                  type="button"
-                  onClick={() => setProfileOpen((v) => !v)}
-                  aria-haspopup="menu"
-                  aria-expanded={profileOpen}
-                  aria-label="Account menu"
-                  className="flex items-center gap-2 rounded-xl p-1 pr-2 ring-1 ring-inset ring-line transition hover:bg-surface-2"
-                >
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-forest-800 text-[12px] font-bold text-sage-300">
-                    {initialsFor(displayName(prefs))}
-                  </span>
-                  <span className="hidden max-w-[120px] truncate text-[12.5px] font-semibold text-ink sm:block">
-                    {displayName(prefs)}
-                  </span>
-                </button>
-                <AnimatePresence>
-                  {profileOpen && (
-                    <>
-                      <div className="fixed inset-0 z-40" onClick={() => setProfileOpen(false)} aria-hidden />
-                      <motion.div
-                        role="menu"
-                        initial={{ opacity: 0, y: -6, scale: 0.98 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -4, scale: 0.98 }}
-                        transition={{ duration: 0.16 }}
-                        className="absolute right-0 top-12 z-50 w-64 rounded-xl bg-surface p-2 shadow-lift ring-1 ring-line"
-                      >
-                        <div className="rounded-lg bg-surface-2 px-3 py-2.5">
-                          <p className="truncate text-[13px] font-bold text-ink">{displayName(prefs)}</p>
-                          <p className="text-[11px] text-muted">Local profile · stored on this device</p>
-                        </div>
-                        <div className="my-1.5 h-px bg-line" aria-hidden />
-                        <button role="menuitem" onClick={() => { setProfileOpen(false); navigate('/app/settings') }} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-ink transition hover:bg-surface-2">
-                          <Settings size={15} className="text-muted" /> Preferences
-                        </button>
-                        <button role="menuitem" onClick={() => { setProfileOpen(false); updatePreferences({ onboardedAt: null }) }} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-ink transition hover:bg-surface-2">
-                          <Info size={15} className="text-muted" /> Replay intro tour
-                        </button>
-                        <button role="menuitem" onClick={() => { setProfileOpen(false); exportWorkspaceData() }} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-ink transition hover:bg-surface-2">
-                          <Download size={15} className="text-muted" /> Export data (JSON)
-                        </button>
-                        <button role="menuitem" onClick={() => { setProfileOpen(false); setResetConfirm(true) }} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium text-danger transition hover:bg-danger-soft">
-                          <Trash2 size={15} /> Reset workspace data
-                        </button>
-                      </motion.div>
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
             </div>
           </div>
         </header>
@@ -382,51 +316,8 @@ export function AppLayout() {
 
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
       <OnboardingModal open={onboardingOpen} />
-      <ResetConfirmDialog open={resetConfirm} onClose={() => setResetConfirm(false)} onDone={() => navigate('/app')} />
       <AssistantDock />
     </div>
-  )
-}
-
-function ResetConfirmDialog({ open, onClose, onDone }: { open: boolean; onClose: () => void; onDone: () => void }) {
-  return (
-    <AnimatePresence>
-      {open && (
-        <motion.div className="fixed inset-0 z-[95] grid place-items-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-          <div className="absolute inset-0 bg-forest-950/55" onClick={onClose} aria-hidden />
-          <motion.div
-            role="alertdialog"
-            aria-modal="true"
-            aria-label="Reset workspace data"
-            initial={{ scale: 0.97, y: 10, opacity: 0 }}
-            animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.98, y: 6, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="relative z-10 w-full max-w-sm rounded-2xl bg-surface p-5 shadow-lift ring-1 ring-line"
-          >
-            <p className="text-[15px] font-bold text-ink">Reset workspace data?</p>
-            <p className="mt-1.5 text-[13px] leading-relaxed text-muted">
-              This clears locally created history, fields, notifications, comparison saves and
-              community reports, and restores the starter dataset. Your preferences are kept.
-            </p>
-            <div className="mt-4 flex justify-end gap-2">
-              <button onClick={onClose} className="rounded-xl px-3.5 py-2 text-[13px] font-semibold text-muted hover:bg-surface-2">
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  resetWorkspaceData()
-                  onDone()
-                }}
-                className="rounded-xl bg-danger px-3.5 py-2 text-[13px] font-bold text-white hover:brightness-95"
-              >
-                Reset data
-              </button>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
   )
 }
 
