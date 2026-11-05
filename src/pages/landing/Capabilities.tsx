@@ -34,7 +34,7 @@ const PILLARS = [
 
 export function Capabilities() {
   return (
-    <section className="mx-auto max-w-7xl px-5 py-16 sm:py-24 lg:px-8" aria-label="Core capabilities">
+    <section className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8" aria-label="Core capabilities">
       <motion.div
         initial={{ opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ export function Capabilities() {
         <SectionHeading
           kicker="The four pillars"
           title="Four capabilities, one decision flow"
-          description="AgrowNex is designed around the way a decision actually happens: notice something, understand it, weigh your options, and stay aware of what neighbours are seeing."
+          description="AgrowNex mirrors the way a decision actually happens: notice something, understand it, weigh your options and stay aware of what neighbours are seeing."
         />
       </motion.div>
       <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

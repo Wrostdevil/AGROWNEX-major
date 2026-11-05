@@ -40,7 +40,7 @@ export function TreatmentShowcase() {
   }, [budget])
 
   return (
-    <section className="mx-auto max-w-7xl px-5 py-16 sm:py-24 lg:px-8" aria-label="Treatment planner preview">
+    <section className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8" aria-label="Treatment planner preview">
       <div className="grid items-start gap-10 lg:grid-cols-[1fr_1.15fr]">
         <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.55, ease }}>
           <SectionHeading

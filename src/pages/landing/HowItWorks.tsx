@@ -84,6 +84,7 @@ const STAGES: Stage[] = [
   },
 ]
 
+/** Full five-stage tour on /how-it-works. */
 export function JourneyTimeline({ heading = true }: { heading?: boolean }) {
   const [openId, setOpenId] = useState<string | null>('submit')
 
@@ -111,7 +112,7 @@ export function JourneyTimeline({ heading = true }: { heading?: boolean }) {
                 {/* node */}
                 <span
                   aria-hidden
-                  className={`absolute left-4 top-5 z-10 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full bg-brand text-on-brand shadow-[0_0_0_5px_rgb(38_122_86/0.15)] sm:left-1/2 ${onRight ? '' : ''}`}
+                  className={`absolute left-4 top-5 z-10 grid h-9 w-9 -translate-x-1/2 place-items-center rounded-full bg-brand text-on-brand shadow-[0_0_0_5px_rgb(38_122_86/0.15)] sm:left-1/2`}
                 >
                   <span className="text-[13px] font-extrabold">{i + 1}</span>
                 </span>
@@ -186,23 +187,35 @@ export function JourneyTimeline({ heading = true }: { heading?: boolean }) {
   )
 }
 
+/**
+ * Compact four-step preview used on the landing page. The full narrative
+ * lives on /how-it-works so the home page stays short.
+ */
 export function HowItWorksPreview() {
   return (
-    <section className="relative overflow-hidden py-16 sm:py-24" aria-label="How it works preview">
+    <section className="relative overflow-hidden py-14 sm:py-20" aria-label="How it works preview">
       <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.55, ease }} className="mx-auto max-w-2xl text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.55, ease }}
+          className="mx-auto max-w-2xl text-center"
+        >
           <p className="kicker text-brand">How it works</p>
-          <h2 className="mt-2 text-[28px] font-extrabold tracking-tight text-ink sm:text-[34px]">Notice. Understand. Decide. Stay aware.</h2>
+          <h2 className="mt-2 text-[28px] font-extrabold tracking-tight text-ink sm:text-[34px]">
+            Notice. Understand. Decide. Stay aware.
+          </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-muted">
-            One connected flow from the field to the decision — with the workspace guiding you
-            through each step.
+            One connected flow from the field to the decision — the workspace
+            guides you through each step.
           </p>
         </motion.div>
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { n: '1', t: 'Submit crop information', d: 'Symptoms, context, optional photo' },
             { n: '2', t: 'Assess potential risks', d: 'Deterministic analysis, step by step' },
-            { n: '3', t: 'Understand & compare', d: 'Explanation + budgeted options' },
+            { n: '3', t: 'Understand & compare', d: 'Explanation plus budgeted options' },
             { n: '4', t: 'Monitor community trends', d: 'Cautious early-warning flags' },
           ].map((s, i) => (
             <motion.div
@@ -221,7 +234,10 @@ export function HowItWorksPreview() {
           ))}
         </div>
         <p className="mt-8 text-center">
-          <Link to="/how-it-works" className="group inline-flex items-center gap-2 rounded-xl bg-surface px-5 py-3 text-[14px] font-bold text-ink ring-1 ring-inset ring-line-strong transition hover:ring-brand/40">
+          <Link
+            to="/how-it-works"
+            className="group inline-flex items-center gap-2 rounded-xl bg-surface px-5 py-3 text-[14px] font-bold text-ink ring-1 ring-inset ring-line-strong transition hover:ring-brand/40"
+          >
             Walk through the full journey <ArrowRight size={15} className="transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </p>

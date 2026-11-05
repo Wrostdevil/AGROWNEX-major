@@ -25,7 +25,7 @@ export function XaiShowcase() {
   const feature = useMemo(() => SHOWCASE.features.find((f) => f.key === selected) ?? SHOWCASE.features[0], [selected])
 
   return (
-    <section className="grain relative overflow-hidden bg-forest-900 py-20 text-ivory sm:py-28" aria-label="Explainable AI preview">
+    <section className="grain relative overflow-hidden bg-forest-900 py-14 text-ivory sm:py-20" aria-label="Explainable AI preview">
       <div aria-hidden className="pointer-events-none absolute -left-24 top-24 h-96 w-96 rounded-full bg-forest-700/60 blur-3xl" />
       <div aria-hidden className="pointer-events-none absolute -right-24 bottom-10 h-80 w-80 rounded-full bg-dawn/10 blur-3xl" />
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
@@ -45,7 +45,7 @@ export function XaiShowcase() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: 0.1, ease }}
-          className="mt-10 grid gap-6 rounded-3xl bg-white/[0.06] p-6 ring-1 ring-inset ring-white/10 backdrop-blur-sm lg:grid-cols-[1.2fr_1fr] lg:p-8"
+          className="mt-9 grid gap-6 rounded-3xl bg-white/[0.06] p-6 ring-1 ring-inset ring-white/10 backdrop-blur-sm lg:grid-cols-[1.2fr_1fr] lg:p-8"
         >
           <div className="rounded-2xl bg-surface p-5 text-ink sm:p-6">
             <div className="flex items-center justify-between gap-3">

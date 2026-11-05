@@ -1,25 +1,27 @@
 import { Hero } from './landing/Hero'
 import { Capabilities } from './landing/Capabilities'
-import { FeatureShowcase } from './landing/FeatureShowcase'
+import { HowItWorksPreview } from './landing/HowItWorks'
 import { XaiShowcase } from './landing/XaiShowcase'
 import { TreatmentShowcase } from './landing/TreatmentShowcase'
-import { CommunityShowcase } from './landing/CommunityShowcase'
 import { ResearchTrust, FinalCta } from './landing/ResearchTrust'
-import { HowItWorksPreview } from './landing/HowItWorks'
 import { usePageTitle } from '../hooks'
 
+/**
+ * Landing page — deliberately compact. Hero → capabilities → the four-step
+ * flow → two live previews → credibility → one closing CTA. Deep feature
+ * tours live on /features and /how-it-works instead of stretching the home
+ * page scroll.
+ */
 export function LandingPage() {
   usePageTitle('')
   return (
     <>
       <Hero />
       <Capabilities />
-      <FeatureShowcase />
+      <HowItWorksPreview />
       <XaiShowcase />
       <TreatmentShowcase />
-      <CommunityShowcase />
       <ResearchTrust />
-      <HowItWorksPreview />
       <FinalCta />
     </>
   )

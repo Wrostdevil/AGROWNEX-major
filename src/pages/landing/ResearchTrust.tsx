@@ -14,7 +14,7 @@ const PRINCIPLES = [
 
 export function ResearchTrust() {
   return (
-    <section className="mx-auto max-w-7xl px-5 py-16 sm:py-24 lg:px-8" aria-label="Research and trust">
+    <section className="mx-auto max-w-7xl px-5 py-14 sm:py-20 lg:px-8" aria-label="Research and trust">
       <motion.div initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.55, ease }} className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <p className="kicker text-brand">Research & trust</p>
@@ -29,7 +29,7 @@ export function ResearchTrust() {
         </Link>
       </motion.div>
 
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {PRINCIPLES.map((p, i) => (
           <motion.div
             key={p.title}
@@ -52,7 +52,7 @@ export function ResearchTrust() {
 export function FinalCta() {
   return (
     <section className="relative overflow-hidden" aria-label="Closing call to action">
-      <div className="grain relative bg-forest-950 py-24 text-center sm:py-32">
+      <div className="grain relative bg-forest-950 py-20 text-center sm:py-24">
         <div aria-hidden className="pointer-events-none absolute left-1/2 top-0 h-[420px] w-[720px] -translate-x-1/2 rounded-full bg-brand/15 blur-3xl" />
         <motion.div
           initial={{ opacity: 0, y: 26 }}
@@ -69,7 +69,7 @@ export function FinalCta() {
             The full workspace is a click away — diagnosis, explanations, treatment planning and
             community intelligence, running from the starter dataset.
           </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link to="/app" className="inline-flex items-center gap-2 rounded-2xl bg-brand px-7 py-4 text-[15px] font-bold text-on-brand shadow-[0_18px_40px_-12px_rgb(38_122_86/0.6)] transition hover:bg-brand-strong">
               Open Workspace <ArrowRight size={17} />
             </Link>

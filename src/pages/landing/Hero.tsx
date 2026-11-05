@@ -21,7 +21,7 @@ export function Hero() {
   const sceneFade = useTransform(scrollYProgress, [0, 0.9], [1, 0.45])
 
   return (
-    <section ref={ref} className="relative overflow-hidden pb-16 sm:pb-24">
+    <section ref={ref} className="relative overflow-hidden pb-14 sm:pb-20">
       {/* Backdrop scene */}
       <motion.div style={{ y: yFar, opacity: sceneFade }} className="pointer-events-none absolute inset-0" aria-hidden>
         <SceneDawnField className="h-full w-full object-cover" />
@@ -50,7 +50,7 @@ export function Hero() {
         </div>
       )}
 
-      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-10 pt-16 sm:pt-24 lg:grid-cols-[1.05fr_0.95fr] lg:px-8 lg:pt-20">
+      <div className="relative mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 px-5 pb-8 pt-14 sm:pb-10 sm:pt-20 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
         {/* Copy */}
         <motion.div style={{ y: yCards }} initial="hidden" animate="show">
           <motion.p variants={fadeUp(reduced)} transition={{ duration: 0.5, ease }} className="kicker text-caution">
@@ -66,10 +66,10 @@ export function Hero() {
               Grow with <span className="relative whitespace-nowrap text-brand">confidence<svg aria-hidden viewBox="0 0 220 12" className="absolute -bottom-1.5 left-0 w-full h-[10px] text-brand/35" preserveAspectRatio="none"><path d="M3 9 C 60 3, 150 2, 217 7" stroke="currentColor" strokeWidth="5" fill="none" strokeLinecap="round"/></svg></span>
             </span>
           </motion.h1>
-          <motion.p variants={fadeUp(reduced, 0.16)} transition={{ duration: 0.6, ease }} className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-muted">
-            An explainable agricultural intelligence platform connecting crop health
-            assessment, evidence-informed treatment planning and community-level early
-            warning — built to show its reasoning, not just scores.
+          <motion.p variants={fadeUp(reduced, 0.16)} transition={{ duration: 0.6, ease }} className="mt-5 max-w-xl text-[16px] leading-relaxed text-muted">
+            Explainable crop intelligence that connects symptom assessment,
+            budget-aware treatment planning and community early warning — and
+            shows its reasoning at every step.
           </motion.p>
           <motion.div variants={fadeUp(reduced, 0.24)} transition={{ duration: 0.6, ease }} className="mt-8 flex flex-wrap items-center gap-3">
             <Link
@@ -87,7 +87,7 @@ export function Hero() {
             </Link>
           </motion.div>
           <motion.ul variants={fadeUp(reduced, 0.32)} transition={{ duration: 0.6, ease }} className="mt-9 flex flex-wrap gap-x-6 gap-y-2.5 text-[13px] font-semibold text-muted">
-            {['Explainable results', 'Budget-aware planning', 'Community situational awareness', 'Research'].map((t) => (
+            {['Explainable results', 'Budget-aware planning', 'Early-warning signals', 'Open evaluation plan'].map((t) => (
               <li key={t} className="flex items-center gap-2">
                 <CheckCircle2 size={15} className="text-brand" /> {t}
               </li>
@@ -193,10 +193,8 @@ export function Hero() {
 
 function Ticker() {
   const lines = [
-    'Predictions arrive with explanations — not as verdicts',
-    'Treatment ranking weighs suitability and safety before cheapness',
-    'A rise in report volume is “possible activity”, never a stated outbreak',
-    'Built to show its reasoning — every result travels with its explanation',
+    'Predictions arrive with explanations — not verdicts',
+    'Treatment ranking weighs suitability and safety before cost',
   ]
   return (
     <div className="border-y border-line bg-surface/60 py-3 backdrop-blur">
