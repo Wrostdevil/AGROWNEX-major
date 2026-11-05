@@ -54,7 +54,7 @@ export function OnboardingModal({ open }: { open: boolean }) {
       description={nameStep ? 'Let’s set up your workspace — it takes about a minute.' : undefined}
       size="sm"
       footer={
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex w-full items-center justify-between gap-2">
           <div className="flex gap-1.5" aria-hidden>
             {Array.from({ length: TOTAL_STEPS }, (_, i) => (
               <span key={i} className={`h-1.5 rounded-full transition-all duration-200 ${i === step ? 'w-5 bg-brand' : 'w-1.5 bg-surface-3'}`} />

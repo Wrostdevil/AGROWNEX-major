@@ -96,7 +96,7 @@ export function Dialog({ open, onClose, title, description, children, footer, si
             exit={{ opacity: 0, y: 10, scale: 0.99 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              'relative z-10 w-full overflow-hidden rounded-2xl bg-surface shadow-lift ring-1 ring-inset ring-line max-h-[86vh] flex flex-col outline-none',
+              'relative z-10 w-full overflow-hidden rounded-2xl bg-surface shadow-lift ring-1 ring-inset ring-line max-h-[88dvh] flex flex-col outline-none',
               SIZES[size],
             )}
           >
@@ -115,7 +115,7 @@ export function Dialog({ open, onClose, title, description, children, footer, si
               </button>
             </div>
             <div className="overflow-y-auto px-5 py-4">{children}</div>
-            {footer && <div className="border-t border-line px-5 py-3.5 shrink-0">{footer}</div>}
+            {footer && <div className="flex flex-wrap items-center gap-2 border-t border-line px-5 py-3.5 shrink-0">{footer}</div>}
           </motion.div>
         </motion.div>
       )}

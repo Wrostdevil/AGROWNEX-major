@@ -134,7 +134,7 @@ export function CameraCapture({ open, onClose, onCapture }: CameraCaptureProps) 
       description="Aim at the affected area — a close-up of a leaf in good light reads best."
       size="md"
       footer={
-        <div className="flex w-full items-center justify-between gap-2">
+        <div className="flex w-full flex-wrap items-center justify-between gap-2">
           {phase === 'frozen' ? (
             <>
               <Button variant="outline" size="md" leadingIcon={<RotateCcw size={15} />} onClick={retake}>

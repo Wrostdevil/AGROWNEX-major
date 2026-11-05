@@ -126,7 +126,7 @@ export function CommunityPage() {
           <Card>
             <CardHeader title="Regional view" subtitle="Relative report pressure across regions (same crop & symptom)" icon={<MapIcon size={16} />} />
             <CardBody>
-              <div className="grid grid-cols-5 gap-2.5">
+              <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5">
                 {REGIONS.map((r) => {
                   const s = getSeries(r.id, cropId, symptomId)
                   const recent = s.slice(-4).reduce((x, p) => x + p.count, 0)
@@ -136,16 +136,16 @@ export function CommunityPage() {
                       key={r.id}
                       type="button"
                       onClick={() => setRegionId(r.id)}
-                      className={`group rounded-xl p-2.5 text-center ring-1 transition ${r.id === regionId ? 'ring-brand' : 'ring-line'} hover:ring-brand/50`}
+                      className={`group rounded-xl p-1.5 text-center ring-1 transition sm:p-2.5 ${r.id === regionId ? 'ring-brand' : 'ring-line'} hover:ring-brand/50`}
                       aria-pressed={r.id === regionId}
                     >
                       <span
                         aria-hidden
-                        className="mx-auto block h-10 w-10 rounded-lg transition-transform group-hover:scale-105"
+                        className="mx-auto block h-8 w-8 rounded-lg transition-transform group-hover:scale-105 sm:h-10 sm:w-10"
                         style={{ backgroundColor: r.tone, opacity: 0.35 + intensity * 0.65 }}
                       />
-                      <span className="mt-1.5 block text-[10.5px] font-bold leading-tight text-ink">{r.name.replace(' District', '').replace('Central ', '').replace('Highland ', 'High. ')}</span>
-                      <span className="tabular block text-[10px] font-semibold text-muted">{recent} recent</span>
+                      <span className="mt-1.5 block text-[9.5px] font-bold leading-tight text-ink sm:text-[10.5px]">{r.name.replace(' District', '').replace('Central ', '').replace('Highland ', 'High. ')}</span>
+                      <span className="tabular block text-[9.5px] font-semibold text-muted sm:text-[10px]">{recent} recent</span>
                     </button>
                   )
                 })}

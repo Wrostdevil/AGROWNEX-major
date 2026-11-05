@@ -95,7 +95,7 @@ export function AssistantDock() {
   const showSuggestions = messages.length === 1 && !thinking
 
   return (
-    <div className="fixed bottom-5 left-4 z-40 sm:bottom-6 sm:left-5 print:hidden">
+    <div className="fixed z-40 print:hidden [bottom:calc(1.25rem+env(safe-area-inset-bottom))] [left:calc(1rem+env(safe-area-inset-left))] sm:[bottom:calc(1.5rem+env(safe-area-inset-bottom))] sm:[left:calc(1.25rem+env(safe-area-inset-left))]">
       {/* Click-outside catcher (lowest layer inside this stacking context) */}
       {open && <div className="fixed inset-0 -z-10 cursor-default" onClick={() => setOpen(false)} aria-hidden />}
 

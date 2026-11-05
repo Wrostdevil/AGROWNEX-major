@@ -142,6 +142,18 @@
   html {
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    /* Keep mobile browsers from auto-inflating text on rotation/zoom. */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    /* Clipping horizontal overflow at the root hides accidental 1–2px
+       element overhangs on ultra-narrow/landscape devices without creating
+       a scroll container (vertical scrolling stays at viewport level). */
+    overflow-x: clip;
+  }
+
+  /* Long labels/URLs/vendor terms must never force horizontal scroll. */
+  h1, h2, h3, h4, p, li, td, th, figcaption, blockquote {
+    overflow-wrap: break-word;
   }
 
   body {
@@ -209,6 +221,17 @@
     border-radius: 999px;
     background: var(--s-brand);
     border: 3px solid var(--s-surface);
+  }
+
+  /* iOS Safari zooms into any form control with font-size < 16px when
+     focused, breaking layouts on phones. Keep desktop sizing, guarantee a
+     comfortable mobile size for every native control. */
+  @media screen and (max-width: 639px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
