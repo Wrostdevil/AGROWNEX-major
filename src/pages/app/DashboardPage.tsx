@@ -5,7 +5,6 @@ import {
   Activity,
   ArrowRight,
   Bell,
-  Bot,
   Clock,
   History,
   Lightbulb,
@@ -35,6 +34,7 @@ import { cropName, REGIONS } from '../../data/catalog'
 import { AlertLevel } from '../../types'
 import { cn } from '../../utils'
 import { relativeTime, formatShortDate } from '../../utils'
+import { AgentOrb } from '../../components/ui/AgentOrb'
 
 const ease: [number, number, number, number] = [0.22, 1, 0.36, 1]
 
@@ -90,7 +90,7 @@ export function DashboardPage() {
             <LinkButton to="/app/diagnosis" leadingIcon={<Stethoscope size={16} />}>
               Start new diagnosis
             </LinkButton>
-            <LinkButton to="/app/assistant" variant="outline" leadingIcon={<Bot size={16} />}>
+            <LinkButton to="/app/assistant" variant="outline" leadingIcon={<AgentOrb size={16} />}>
               Ask the farming assistant
             </LinkButton>
           </>

@@ -138,6 +138,56 @@
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Agent orb life — blink / float / attention halo
+   (prefers-reduced-motion zeroes these via the global rule in @layer base)
+--------------------------------------------------------------------------- */
+@keyframes agent-blink {
+  0%,
+  86%,
+  94%,
+  100% {
+    transform: scaleY(1);
+  }
+  90% {
+    transform: scaleY(0.12);
+  }
+}
+.agent-orb-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: agent-blink 4.6s ease-in-out infinite;
+}
+
+@keyframes agent-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+.animate-agent-float {
+  animation: agent-float 3.4s ease-in-out infinite;
+}
+
+@keyframes agent-halo {
+  0%,
+  16% {
+    box-shadow: 0 0 0 0 rgb(70 176 131 / 0.4);
+  }
+  55% {
+    box-shadow: 0 0 0 16px rgb(70 176 131 / 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgb(70 176 131 / 0);
+  }
+}
+.animate-agent-halo {
+  animation: agent-halo 2.8s ease-out infinite;
+}
+
 @layer base {
   html {
     -webkit-font-smoothing: antialiased;

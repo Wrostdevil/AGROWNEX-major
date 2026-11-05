@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Bot, CheckCircle2, Copy, Loader2, RefreshCw, Send, User as UserIcon } from 'lucide-react'
+import { CheckCircle2, Copy, Loader2, RefreshCw, Send, User as UserIcon } from 'lucide-react'
+import { AgentOrb } from '../../components/ui/AgentOrb'
 import { usePageTitle } from '../../hooks'
 import { PageHeader, NoteBlock } from '../../components/ui/shared'
 import { Card } from '../../components/ui/Card'
@@ -285,7 +286,7 @@ function MessageBubble({ m }: { m: Msg }) {
         )}
         aria-hidden
       >
-        {isUser ? <UserIcon size={14} /> : <Bot size={15} />}
+        {isUser ? <UserIcon size={14} /> : <AgentOrb size={15} />}
       </span>
       <div className={cn('min-w-0 max-w-[84%]', isUser && 'text-right')}>
         <div
@@ -350,7 +351,7 @@ function ThinkingBlock({ phase }: { phase: number }) {
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="flex gap-3">
       <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-forest-900 text-sage-300 ring-1 ring-inset ring-white/10" aria-hidden>
-        <Bot size={15} />
+        <AgentOrb size={15} />
       </span>
       <div className="rounded-2xl rounded-tl-md bg-surface-2/80 px-4 py-3 ring-1 ring-inset ring-line">
         <div className="flex items-center gap-2 text-[12px] font-semibold text-muted">

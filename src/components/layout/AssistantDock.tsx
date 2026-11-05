@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Bot, CornerDownRight, Loader2, Send, X, User as UserIcon } from 'lucide-react'
+import { CornerDownRight, Loader2, Send, X, User as UserIcon } from 'lucide-react'
+import { AgentOrb } from '../ui/AgentOrb'
 import { LinkButton } from '../ui/Button'
 import { SUGGESTED_PROMPTS, respondWithBackend } from '../../services/assistantService'
 import { latestCompleteRecord } from '../../services/historyService'
@@ -117,7 +118,7 @@ export function AssistantDock() {
                 className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-forest-900 text-sage-300 ring-1 ring-inset ring-white/10"
                 aria-hidden
               >
-                <Bot size={15} />
+                <AgentOrb size={17} />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="truncate text-[13.5px] font-bold text-ink">AgrowNex assistant</p>
@@ -209,7 +210,7 @@ export function AssistantDock() {
         )}
       </AnimatePresence>
 
-      {/* Dock button */}
+      {/* Dock button — 3D agent orb */}
       <button
         ref={fabRef}
         type="button"
@@ -218,16 +219,20 @@ export function AssistantDock() {
         aria-haspopup="dialog"
         title={open ? 'Close assistant chat' : 'Ask the AI assistant'}
         onClick={() => setOpen((v) => !v)}
-        className="relative grid h-13 w-13 place-items-center rounded-full bg-brand text-on-brand shadow-lift ring-1 ring-inset ring-brand-strong/40 transition hover:bg-brand-strong focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="relative isolate grid h-13 w-13 place-items-center rounded-full bg-[radial-gradient(125%_125%_at_30%_22%,#41A97A_0%,#267A56_38%,#17523C_78%,#0E3B2C_100%)] shadow-[0_18px_32px_-10px_rgb(23_82_60/0.65),0_5px_12px_-4px_rgb(23_82_60/0.5),inset_0_1px_1px_rgb(255_255_255/0.30),inset_0_-12px_18px_-10px_rgb(6_22_17/0.65),inset_0_0_0_1px_rgb(255_255_255/0.07)] ring-1 ring-inset ring-brand-strong/45 transition-transform duration-200 hover:scale-[1.06] active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
       >
+        {/* attention halo (closed state only) */}
+        {!open && <span aria-hidden className="absolute inset-0 -z-10 rounded-full animate-agent-halo" />}
         <AnimatePresence mode="wait" initial={false}>
           {open ? (
-            <motion.span key="close" initial={{ opacity: 0, rotate: -90, scale: 0.6 }} animate={{ opacity: 1, rotate: 0, scale: 1 }} exit={{ opacity: 0, rotate: 90, scale: 0.6 }} transition={{ duration: 0.16 }} className="absolute inset-0 grid place-items-center" aria-hidden>
+            <motion.span key="close" initial={{ opacity: 0, rotate: -90, scale: 0.6 }} animate={{ opacity: 1, rotate: 0, scale: 1 }} exit={{ opacity: 0, rotate: 90, scale: 0.6 }} transition={{ duration: 0.16 }} className="absolute inset-0 grid place-items-center text-on-brand" aria-hidden>
               <X size={22} />
             </motion.span>
           ) : (
-            <motion.span key="bot" initial={{ opacity: 0, rotate: 90, scale: 0.6 }} animate={{ opacity: 1, rotate: 0, scale: 1 }} exit={{ opacity: 0, rotate: -90, scale: 0.6 }} transition={{ duration: 0.16 }} className="absolute inset-0 grid place-items-center" aria-hidden>
-              <Bot size={22} />
+            <motion.span key="orb" initial={{ opacity: 0, y: 12, scale: 0.55 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.55 }} transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }} className="absolute inset-0 grid place-items-center" aria-hidden>
+              <span className="animate-agent-float grid place-items-center">
+                <AgentOrb size={36} />
+              </span>
             </motion.span>
           )}
         </AnimatePresence>
@@ -255,7 +260,7 @@ function DockBubble({ m }: { m: Msg }) {
         )}
         aria-hidden
       >
-        {isUser ? <UserIcon size={13} /> : <Bot size={13} />}
+        {isUser ? <UserIcon size={13} /> : <AgentOrb size={14} />}
       </span>
       <div className={cn('min-w-0 max-w-[82%]', isUser && 'text-right')}>
         <div
@@ -302,7 +307,7 @@ function DockThinking({ phase }: { phase: number }) {
   return (
     <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex gap-2.5">
       <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-forest-900 text-sage-300 ring-1 ring-inset ring-white/10" aria-hidden>
-        <Bot size={13} />
+        <AgentOrb size={14} />
       </span>
       <div className="rounded-2xl rounded-tl-md bg-surface-2/80 px-3.5 py-2.5 ring-1 ring-inset ring-line">
         <div className="flex items-center gap-1.5 text-[11.5px] font-semibold text-muted">
