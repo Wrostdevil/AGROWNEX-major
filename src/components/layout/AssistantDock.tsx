@@ -95,7 +95,7 @@ export function AssistantDock() {
   const showSuggestions = messages.length === 1 && !thinking
 
   return (
-    <div className="fixed z-40 print:hidden [bottom:calc(1.25rem+env(safe-area-inset-bottom))] [left:calc(1rem+env(safe-area-inset-left))] sm:[bottom:calc(1.5rem+env(safe-area-inset-bottom))] sm:[left:calc(1.25rem+env(safe-area-inset-left))]">
+    <div className="fixed z-40 print:hidden [bottom:calc(1.25rem+env(safe-area-inset-bottom))] [right:calc(1rem+env(safe-area-inset-right))] sm:[bottom:calc(1.5rem+env(safe-area-inset-bottom))] sm:[right:calc(1.25rem+env(safe-area-inset-right))]">
       {/* Click-outside catcher (lowest layer inside this stacking context) */}
       {open && <div className="fixed inset-0 -z-10 cursor-default" onClick={() => setOpen(false)} aria-hidden />}
 
@@ -109,7 +109,7 @@ export function AssistantDock() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 10, scale: 0.98 }}
             transition={{ duration: 0.22, ease }}
-            className="absolute bottom-[calc(100%+12px)] left-0 flex h-[min(72dvh,540px)] w-[min(92vw,370px)] flex-col overflow-hidden rounded-2xl bg-surface shadow-lift ring-1 ring-inset ring-line"
+            className="absolute bottom-[calc(100%+12px)] right-0 flex h-[min(72dvh,540px)] w-[min(92vw,370px)] flex-col overflow-hidden rounded-2xl bg-surface shadow-lift ring-1 ring-inset ring-line"
           >
             {/* Header */}
             <div className="flex items-center gap-2.5 border-b border-line bg-surface-2/60 px-4 py-3">
