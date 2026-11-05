@@ -5,6 +5,7 @@ import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { cn } from '../../utils'
 import { Logo } from './Logo'
 import { PublicFooter } from './Footer'
+import { AssistantDock } from './AssistantDock'
 
 const NAV = [
   { label: 'Home', to: '/' },
@@ -93,7 +94,7 @@ export function PublicLayout() {
       <AnimatePresence>
         {drawerOpen && (
           <motion.div
-            className="fixed inset-0 z-40 lg:hidden"
+            className="fixed inset-0 z-[60] lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -139,6 +140,7 @@ export function PublicLayout() {
         <Outlet />
       </main>
       <PublicFooter />
+      <AssistantDock />
     </div>
   )
 }
