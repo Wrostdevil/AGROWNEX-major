@@ -241,6 +241,7 @@ local rules engine and labels that result as local.
 | `503 MODEL_UNAVAILABLE` in the app | The ML service is asleep, starting, or has no artifacts. Open the ML `/model/info` URL directly. |
 | Browser console: `Origin ... is not in CORS_ORIGINS` | Add the exact Vercel origin (scheme + host, no trailing slash) to `CORS_ORIGINS` and redeploy the API. |
 | Refreshing a deep link returns 404 | `vercel.json` is missing or the Vercel Root Directory is not the repo root. Redeploy with `vercel.json` present. |
+| Vercel build fails with `TS2307: Cannot find module '../data/catalog'` | A `.vercelignore` pattern was **not anchored** (e.g. `data` instead of `/data`). In gitignore syntax an unanchored name matches at any depth, so the upload excluded `src/data/*.ts`. Keep the leading `/` in `.vercelignore`. |
 | App still calls `127.0.0.1:5000` | `VITE_API_BASE_URL` was not set for the environment that was built, or the site was not redeployed after setting it. |
 | First diagnosis uses the local engine | Render Free services sleep after inactivity. The first request can take 30–60 s, while the frontend waits 20 s for a diagnosis. Pre-warm both URLs before a demo, or use a paid always-on Render plan. |
 | Render build fails installing numpy/scipy | `PYTHON_VERSION` is not `3.12.6` (or another 3.12.x). The pinned wheels do not support Render's newer default Python. |

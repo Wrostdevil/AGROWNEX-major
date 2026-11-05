@@ -1,7 +1,10 @@
 # Ignore non-frontend code when uploading to Vercel.
 # The frontend only imports from src/.
-backend
-ml-service
-data
-scripts
-render.yaml
+# NOTE: patterns MUST be anchored with a leading "/" — unanchored names
+# (e.g. "data") match at any depth and would also strip src/data/*.ts
+# from the upload, which breaks "tsc --noEmit" with TS2307.
+/backend
+/ml-service
+/data
+/scripts
+/render.yaml
